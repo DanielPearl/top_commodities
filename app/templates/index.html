@@ -1,0 +1,16 @@
+<!-- index.html -->
+
+{% extends "base.html" %}
+
+{% block headers %}
+<script type="application/json" id="embedded_posts">{{ posts|tojson|safe }}</script>
+{% endblock %}
+
+{% block content %}
+    <h1>Hi, {{ user.first_name }}!</h1>
+
+    <!-- World map tag -->
+    <div id="regions_div" style="width: 1800px; height: 1400px;"></div>
+
+    
+{% endblock %}
