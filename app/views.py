@@ -1,24 +1,39 @@
 # views.py
 
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, request
 from app import app, models, db
 import json
 import plotly.plotly as py
 import pandas as pd
 from sqlalchemy.sql import text
 from MapDataList2D import MapDataStructure
+from app import forms
 
-@app.route('/')
-@app.route('/index')
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    cap = models.CropAnnualProduction()
+
     user = {'first_name': 'Daniel'}
+
+    # Get items from form
+    form = forms.NameForm()
+    country, crop, year = None, None, None
+    if request.method == 'POST':
+        country = form.country.data
+        crop = form.crop.data
+        year = form.year.data
+        print(year)
+        print(crop)
+    # cap = models.CropAnnualProduction()
+
+    # Map query
     connection = db.engine.connect()
-    sql = "SELECT * FROM crop_annual_production WHERE Item LIKE '%{0}%' AND Year = '{1}' AND Country != 'World' AND Country NOT LIKE '%Americas%' AND Country != 'North America' AND Country != 'South America' AND Country != 'Central America' AND Country NOT LIKE '%Europe%' AND Country != 'Africa' AND Country != 'Western Africa' AND Country NOT LIKE '%Asia%' AND Country NOT LIKE '%Countries%'".format("Wine", 2010)
+    sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Country != 'World' AND Country NOT LIKE '%Americas%' AND Country != 'North America' AND Country != 'South America' AND Country != 'Central America' AND Country NOT LIKE '%Europe%' AND Country != 'Africa' AND Country != 'Western Africa' AND Country NOT LIKE '%Asia%' AND Country NOT LIKE '%Countries%'".format(crop, year)
     results = connection.execute(text(sql)).fetchall()
 
-    tdl = MapDataStructure(['Country', 'Value'])
+    tdl = MapDataStructure()
 
+    tdl.add_row(["Country", "Value"])
     for i in range(len(results)):
         # access the result at i
         result = results[i]
@@ -26,11 +41,11 @@ def index():
         val = result.Value
         tdl.add_row([country, int(round(float(results[i].Value)))])
 
-    lstats = tdl.generate_data()
+    lstats = tdl.generate_js_list()
 
     return render_template('index.html',
                            title='Home',
                            user=user,
-                           posts=lstats)
-
-#
+                           form = form,
+                           posts=lstats,
+                           country=country)

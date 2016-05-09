@@ -1,17 +1,20 @@
 class MapDataStructure:
 
-    def __init__(self, headers):
-        self.header = headers
+    def __init__(self):
         self.rows = []
 
     def add_row(self, row):
-        if len(row) == len(self.header):
-            self.rows.append(row)
-        #else
+        self.rows.append(row)
 
-    def generate_data(self):
+    def generate_js_list(self):
         result = []
-        result.append(self.header)
         for row in self.rows:
             result.append(row)
         return result
+
+    def generate_dict(self, country, item, year):
+        temp_dict = {}
+        temp_dict["country"] = country
+        temp_dict["item"] = item
+        temp_dict["year"] = year
+        return temp_dict

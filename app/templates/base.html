@@ -2,22 +2,8 @@
 
 <html>
     <head>
-        <title>microblog</title>
+        <title>top commodities</title>
         <link href="../static/styles.css" media="screen" rel="stylesheet" type="text/css">
-        <!-- google charts -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-        <!-- <script type="text/javascript">
-          google.charts.load('current', {packages: ['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
-        </script> -->
-
-        <!-- google api -->
-        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-
-        <!-- world_stats.js -->
-        <script type="text/javascript" src="../static/top_commodities.js"></script>
-        {% block headers %}{% endblock %}
     </head>
 
     <nav>
@@ -25,8 +11,18 @@
 
     <body>
         <!-- index.html -->
-
         {% block content %}{% endblock %}
 
+        <!-- json script -->
+        <script type="application/json" id="embedded_posts">{{ posts|tojson|safe }}</script>
+
+        <!-- google charts -->
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <!-- google api -->
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+        <!-- world_stats.js -->
+        <script type="text/javascript" src="../static/top_commodities.js"></script>
     </body>
 </html>
