@@ -22,9 +22,6 @@ def index():
         country = form.country.data
         crop = form.crop.data
         year = form.year.data
-        print(year)
-        print(crop)
-    # cap = models.CropAnnualProduction()
 
     # Map query
     connection = db.engine.connect()

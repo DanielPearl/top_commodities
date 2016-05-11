@@ -18,3 +18,6 @@ class MapDataStructure:
         temp_dict["item"] = item
         temp_dict["year"] = year
         return temp_dict
+
+    def generate_choices(self, query):
+        pass
