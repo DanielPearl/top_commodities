@@ -11,17 +11,14 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 class CropAnnualProduction(db.Model):
-    __tablename__ = 'crop_annual_production'
+    __tablename__ = 'crops_annual_production'
     id = db.Column(db.Integer, primary_key=True)
+    Country_Code = db.Column(db.String(255))
     Country = db.Column(db.String(255))
     Item = db.Column(db.String(255))
     Year = db.Column(db.Integer)
     Unit = db.Column(db.String(255), nullable=True)
-    Value = db.Column(db.Float(255), nullable=True)
-
-
-    # def __repr__(self):
-    #     return "{0} {1} {2} {3} {4}".format(self.Country, self.Year, self.Item, round(float(self.Value),2), self.Unit)
+    Value = db.Column(db.Integer)
 
 if __name__ == '__main__':
     manager.run()

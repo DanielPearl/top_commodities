@@ -11,13 +11,3 @@ class MapDataStructure:
         for row in self.rows:
             result.append(row)
         return result
-
-    def generate_dict(self, country, item, year):
-        temp_dict = {}
-        temp_dict["country"] = country
-        temp_dict["item"] = item
-        temp_dict["year"] = year
-        return temp_dict
-
-    def generate_choices(self, query):
-        pass

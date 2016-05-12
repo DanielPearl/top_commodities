@@ -8,7 +8,6 @@ connection = db.engine.connect()
 
 # Country query
 countries = connection.execute(text("SELECT DISTINCT Country, Country FROM crop_annual_production")).fetchall()
-print(countries)
 # Crop query
 crops = connection.execute(text("SELECT DISTINCT Item, Item FROM crop_annual_production")).fetchall()
 

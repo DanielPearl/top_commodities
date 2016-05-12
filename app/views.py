@@ -25,7 +25,7 @@ def index():
 
     # Map query
     connection = db.engine.connect()
-    sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Country != 'World' AND Country NOT LIKE '%Americas%' AND Country != 'North America' AND Country != 'South America' AND Country != 'Central America' AND Country NOT LIKE '%Europe%' AND Country != 'Africa' AND Country != 'Western Africa' AND Country NOT LIKE '%Asia%' AND Country NOT LIKE '%Countries%'".format(crop, year)
+    sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Value != '{2}'".format(crop, year, None)
     results = connection.execute(text(sql)).fetchall()
 
     tdl = MapDataStructure()
@@ -36,7 +36,7 @@ def index():
         result = results[i]
         country = result.Country
         val = result.Value
-        tdl.add_row([country, int(round(float(results[i].Value)))])
+        tdl.add_row([country, results[i].Value])
 
     lstats = tdl.generate_js_list()
 
