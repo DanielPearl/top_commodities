@@ -25,7 +25,10 @@ def index():
 
     # Map query
     connection = db.engine.connect()
-    sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Value != '{2}'".format(crop, year, None)
+    if country != "All":
+        sql = "SELECT * FROM crop_annual_production WHERE Country = '{0}' AND Item = '{1}' AND Year = '{2}' AND Value != '{3}' AND Element ='Production' AND Country_Code < 1000".format(country, crop, year, None)
+    else:
+        sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Value != '{2}' AND Element ='Production' AND Country_Code < 1000".format(crop, year, None)
     results = connection.execute(text(sql)).fetchall()
 
     tdl = MapDataStructure()
