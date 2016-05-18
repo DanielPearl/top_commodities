@@ -12,9 +12,6 @@ from app import forms
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-
-    user = {'first_name': 'Daniel'}
-
     # Get items from form
     form = forms.NameForm()
     country, crop, year = None, None, None
@@ -26,14 +23,13 @@ def index():
     # Map query
     connection = db.engine.connect()
     if country != "All":
-        sql = "SELECT * FROM crop_annual_production WHERE Country = '{0}' AND Item = '{1}' AND Year = '{2}' AND Value != '{3}' AND Element ='Production' AND Country_Code < 1000".format(country, crop, year, None)
+        sql = "SELECT * FROM crop_annual_production WHERE Country = '{0}' AND Item = '{1}' AND Year = '{2}' AND Value != '{3}' AND Value > 0 AND Element ='Production' AND Country_Code < 1000".format(country, crop, year, None)
     else:
-        sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Value != '{2}' AND Element ='Production' AND Country_Code < 1000".format(crop, year, None)
+        sql = "SELECT * FROM crop_annual_production WHERE Item = '{0}' AND Year = '{1}' AND Value != '{2}' AND Value > 0 AND Element ='Production' AND Country_Code < 1000".format(crop, year, None)
     results = connection.execute(text(sql)).fetchall()
 
     tdl = MapDataStructure()
 
-    tdl.add_row(["Country", "Value"])
     for i in range(len(results)):
         # access the result at i
         result = results[i]
@@ -42,10 +38,12 @@ def index():
         tdl.add_row([country, results[i].Value])
 
     lstats = tdl.generate_js_list()
+    lstats.sort(key=lambda x: x[1], reverse=True)
+    lstats.insert(0,["Country","Tonnes"])
 
     return render_template('index.html',
                            title='Home',
-                           user=user,
                            form = form,
                            posts=lstats,
+                           crop=crop,
                            country=country)
