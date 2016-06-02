@@ -1,7 +1,9 @@
 google.charts.load('current', {'packages':['geochart','corechart','bar']});
 
 google.charts.setOnLoadCallback(drawRegionsMap);
-google.charts.setOnLoadCallback(drawBasic);
+google.charts.setOnLoadCallback(drawBarGraph);
+google.charts.setOnLoadCallback(drawPieChart);
+
 
 function drawRegionsMap() {
 
@@ -21,7 +23,7 @@ function drawRegionsMap() {
     chart.draw(data, options);
 }
 
-function drawBasic() {
+function drawBarGraph() {
 
     var parsed_data = JSON.parse(document.getElementById('embedded_posts').innerHTML);
     var data = google.visualization.arrayToDataTable(parsed_data);
@@ -38,12 +40,18 @@ function drawBasic() {
         height: (length * 20),
         fontSize: 14,
         chartArea:{
-            height:'90%'
+            height:'95%'
+        },
+        axes: {
+            x: {
+                0: { side: 'top', label: 'Tonnes'}
+            }
         },
         hAxis: {
             title: 'Tonnes',
             titleTextStyle:{color: '#fff'},
-            textStyle:{color: '#fff'}
+            textStyle:{color: '#fff'},
+            gridlines: {color: 'fff'}
         },
         vAxis: {
             title: 'Country',
@@ -58,3 +66,24 @@ function drawBasic() {
 
     chart.draw(data, options);
 }
+
+function drawPieChart() {
+
+    var parsed_data = JSON.parse(document.getElementById('embedded_posts').innerHTML);
+
+    var data = google.visualization.arrayToDataTable(parsed_data);
+
+    var options = {
+        title: crop,
+        titleTextStyle:{color: '#fff'},
+        backgroundColor: '#2a2a2a',
+        width: '100%',
+        legend: {
+            textStyle:{color: '#fff'}
+        }
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+    chart.draw(data, options);
+    }

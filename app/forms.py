@@ -7,13 +7,14 @@ from sqlalchemy.sql import text
 connection = db.engine.connect()
 
 # Country query
-countries = connection.execute(text("SELECT DISTINCT Country, Country FROM crop_annual_production WHERE Country_Code < 1000")).fetchall()
+countries = connection.execute(text("SELECT DISTINCT Country, Country FROM crop_annual_production WHERE Country_Code < 1000 AND Country NOT LIKE '%,%' AND Country NOT LIKE '%(%'")).fetchall()
 countries.sort()
 countries.insert(0,("All","All"))
 
 # Crop query
 crops = connection.execute(text("SELECT DISTINCT Item, Item FROM crop_annual_production")).fetchall()
 crops.sort()
+crops.insert(0,("All","All"))
 
 # Year query
 years = connection.execute(text("SELECT DISTINCT Year, Year FROM crop_annual_production")).fetchall()
