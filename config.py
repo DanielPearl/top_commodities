@@ -2,12 +2,11 @@
 
 import os
 from app import app
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.migrate import Migrate, MigrateCommand
 from local_settings import *
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+DEBUG = True
 APP_DEBUG = True
 CSRF_ENABLED = True
 

@@ -2,25 +2,18 @@
 
 {% extends "base.html" %}
 
-{% block content %}
-    <h1>World Crop Production</h1>
+{% block index %}
+    <h1 class='title'>FAOSTAT Top Commodities</h1>
 
-    <!-- Form tag -->
-    <form method="POST">
-        {{ form.country.label }} {{ form.country() }}
-        {{ form.crop.label }} {{ form.crop() }}
-        {{ form.year.label }} {{ form.year() }}
-        {{ form.submit() }}
-    </form>
-
-    <!-- World Map -->
-    <div class="regions_div" id="regions_div"></div>
-
-    <!-- Bar Chart -->
-    <div class="chart_div" id="chart_div">{{crop}}</div>
-
-    <!-- Pie Chart -->
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
-
-
+    <!-- Tableau Dashboard -->
+    <div class='tableauPlaceholder' style='width: 1004px; height: 836px;'>
+        <object class='tableauViz' width='1004' height='836' style='display:none;'>
+            <param name='host_url' value='https%3A%2F%2Fus-east-1.online.tableau.com%2F' />
+            <param name='site_root' value='&#47;t&#47;danielaaronpearlgmailcom' />
+            <param name='name' value='top_commodities&#47;Dashboard' />
+            <param name='tabs' value='no' />
+            <param name='toolbar' value='yes' />
+            <param name='showShareOptions' value='true' />
+        </object>
+    </div>
 {% endblock %}

@@ -2,23 +2,40 @@
 
 from flask import Flask
 from app import app, db
-from flask_script import Manager
-from flask_migrate import Migrate, MigrateCommand
+
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, ForeignKey
 
 
-migrate = Migrate(app, db)
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
+class Country(db.Model):
+    __tablename__ = 'countries'
+    id = Column(Integer, primary_key=True)
+    country_code = Column(Integer)
+    country_name = Column(String(255))
 
-class CropAnnualProduction(db.Model):
-    __tablename__ = 'crops_annual_production'
-    id = db.Column(db.Integer, primary_key=True)
-    Country_Code = db.Column(db.String(255))
-    Country = db.Column(db.String(255))
-    Item = db.Column(db.String(255))
-    Year = db.Column(db.Integer)
-    Unit = db.Column(db.String(255), nullable=True)
-    Value = db.Column(db.Integer)
+class Crop(db.Model):
+    __tablename__ = 'crops'
+    id = Column(Integer, primary_key=True)
+    crop_code = Column(Integer)
+    crop_name = Column(String(255))
 
-if __name__ == '__main__':
-    manager.run()
+class Element(db.Model):
+    __tablename__ = 'elements'
+    id = Column(Integer, primary_key=True)
+    element_code = Column(Integer)
+    element_name = Column(String(255))
+
+class Unit(db.Model):
+    __tablename__ = 'units'
+    id = Column(Integer, primary_key=True)
+    unit_code = Column(Integer)
+    unit_name = Column(String(255))
+
+class CropProduction(db.Model):
+    __tablename__ = 'crops_production'
+    id = Column(Integer, primary_key=True)
+    country_code = Column(Integer, ForeignKey('countries.country_code'))
+    crop_code = Column(Integer, ForeignKey('crops.crop_code'))
+    element_code = Column(Integer, ForeignKey('elements.element_code'))
+    year = Column(Integer)
+    value = Column(Integer)

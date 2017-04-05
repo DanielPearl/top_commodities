@@ -3,11 +3,6 @@
 .vagrant
 src/*
 !src/.gitkeep
-puppet/modules/*
-!puppet/modules/.gitkeep
-puppet/.librarian
-puppet/.tmp
-puppet/Puppetfile.lock
 capture/
 *.sql
 logs/
